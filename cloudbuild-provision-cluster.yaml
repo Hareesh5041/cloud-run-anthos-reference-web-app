@@ -28,7 +28,7 @@ steps:
   args: [
     'container', 'clusters', 'create', 'gcpcluster',
     '--addons', 'HorizontalPodAutoscaling,HttpLoadBalancing,CloudRun',
-    '--machine-type', 'e2-standard-4',
+    '--machine-type', 'e2-micro',
     '--num-nodes', '2',
     '--cluster-version', '${_CLUSTER_GKE_VERSION}',
     '--enable-stackdriver-kubernetes',
