@@ -26,7 +26,7 @@ steps:
   id: Create Cluster
   waitFor: ['-']
   args: [
-    'container', 'clusters', 'create', 'gcpcluster2',
+    'container', 'clusters', 'create', 'gcpcluster',
     '--addons', 'HorizontalPodAutoscaling,HttpLoadBalancing,CloudRun',
     '--machine-type', 'e2-standard-4',
     '--num-nodes', '2',
