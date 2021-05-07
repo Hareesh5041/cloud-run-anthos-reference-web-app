@@ -26,7 +26,7 @@ steps:
   id: Create Cluster
   waitFor: ['-']
   args: [
-    'container', 'clusters', 'create', 'gcpcluster1',
+    'container', 'clusters', 'create', 'gcpcluster2',
     '--addons', 'HorizontalPodAutoscaling,HttpLoadBalancing,CloudRun',
     '--machine-type', 'e2-standard-4',
     '--num-nodes', '2',
@@ -34,40 +34,6 @@ steps:
     '--enable-stackdriver-kubernetes',
     '--workload-pool', '${PROJECT_ID}.svc.id.goog',
     '--enable-ip-alias',
-    '--zone', 'us-east4-c'
-  ]
-
-## SERVICE ACCOUNT SETUP
-
-# Create a service account for Config Connecter (if one does not already exist)
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: Create Config Connector service account
-  waitFor: ['-']
-  entrypoint: /bin/bash
-  args:
-  - '-c'
-  - |
-      gcloud iam service-accounts describe cnrm-system@${PROJECT_ID}.iam.gserviceaccount.com || gcloud iam service-accounts create cnrm-system
-
-# Set up IAM role bindings for Config Connector
-# See: https://cloud.google.com/iam/docs/understanding-roles#primitive_role_definitions
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: Grant Owner permissions
-  waitFor: ['Create Config Connector service account']
-  args: [
-      'projects','add-iam-policy-binding','${PROJECT_ID}',
-      '--member=serviceAccount:cnrm-system@${PROJECT_ID}.iam.gserviceaccount.com',
-      '--role=roles/owner'
-  ]
-
-# Set up the Workload Identity binding for Config Connector on the cluster
-# See: https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: Create IAM policy binding
-  waitFor: ['Create Config Connector service account', 'Create Cluster']
-  args: [
-      'iam','service-accounts','add-iam-policy-binding','cnrm-system@${PROJECT_ID}.iam.gserviceaccount.com',
-      '--member=serviceAccount:${PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager]',
-      '--role=roles/iam.workloadIdentityUser'
+    '--zone', 'us-west1-c'
   ]
 
