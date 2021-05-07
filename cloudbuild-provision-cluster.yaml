@@ -34,6 +34,6 @@ steps:
     '--enable-stackdriver-kubernetes',
     '--workload-pool', '${PROJECT_ID}.svc.id.goog',
     '--enable-ip-alias',
-    '--zone', 'us-west1-c'
+    '--zone', 'asia-east1-c'
   ]
 
