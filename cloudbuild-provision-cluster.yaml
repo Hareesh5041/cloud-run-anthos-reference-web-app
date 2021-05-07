@@ -34,7 +34,7 @@ steps:
     '--enable-stackdriver-kubernetes',
     '--workload-pool', '${PROJECT_ID}.svc.id.goog',
     '--enable-ip-alias',
-    '--zone', 'us-east1-c'
+    '--zone', 'us-east4-c'
   ]
 
 ## SERVICE ACCOUNT SETUP
